@@ -1,0 +1,134 @@
+/* @import '~antd/dist/antd.css';
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+ 
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+
+  
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.lecture-avatar{
+  padding:10px;
+  color:white;
+  font-weight: bold;
+}
+
+#components-layout-demo-side .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+
+.login-pannel{
+  background-color:#001529e0;
+  padding:20px;
+  color:white;
+  border-radius: 15px;
+}
+
+.login-component{
+
+  height:520px;
+}
+.background-images{
+  background-repeat: no-repeat;
+  background-image: url('https://www.wallpapertip.com/wmimgs/94-948582_light-colorful-background-hd.jpg');
+  background-size:cover;
+}
+.course-component{
+
+  padding: 15px;
+  border: 1px solid rgb(223, 216, 216);
+  border-radius: 5px;
+  overflow:auto;
+}
+
+.course-detail{
+  padding:20px;
+
+  border: 1px solid rgb(223, 216, 216);
+}
+.student-component{
+
+  padding: 15px;
+  border: 1px solid rgb(223, 216, 216);
+  border-radius: 5px;
+}
+
+
+.studentDetail{
+  overflow: auto;
+}
+
+.events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .events .ant-badge-status {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+  .notes-month {
+    text-align: center;
+    font-size: 28px;
+  }
+  .notes-month section {
+    font-size: 28px;
+  } */
