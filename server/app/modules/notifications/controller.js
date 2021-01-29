@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
-const Notifications = mongoose.model("Notifications");
 const Serivce = require('./service');
 const constants = require('../../utils/constants')
 const bcrypt = require('bcryptjs');
 const { validateCreate, validateEdit } = require('../../models/notifications')
 
-const getMany = (req, res) => {
+const getMany = async (req, res) => {
     Serivce.getMany()
+        .then(data => {
+            res.status(200).json(data)
+        }).catch(err => {
+            res.status(401).json(err)
+        })
+}
+
+const getJoinMany = async (req, res) => {
+    Serivce.getJoinMany()
         .then(data => {
             res.status(200).json(data)
         }).catch(err => {
@@ -113,6 +121,7 @@ const deleteMany = (req, res) => {
 
 module.exports = {
     getMany,
+    getJoinMany,
     getOne,
     create,
     update,

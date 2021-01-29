@@ -17,7 +17,6 @@ module.exports = (app) => {
 
     app.use(bodyParser.json());
 
-    // app.use('/api/v1', apiRouterPL);
-
+    app.use('/api/pl', apiRouterPL);
     app.use('/api/pv', apiRouterPV);
 }

@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const { validateCreateUser, validateEditUser } = require('../../models/users')
 
 const getMany = (req, res) => {
-    UserSerivce.getMany()
+    UserSerivce.getMany().select("-password")
         .then(data => {
             res.status(200).json(data)
         }).catch(err => {
@@ -16,7 +16,7 @@ const getMany = (req, res) => {
 
 const getOne = (req, res) => {
     let id = req.params.id;
-    UserSerivce.getOne(id)
+    UserSerivce.getOne(id).select("-password")
         .then((data) => {
             return res.status(constants.CODE.GET_OK).json(data);
         })

@@ -7,7 +7,7 @@ const constants = require('../../utils/constants')
 const config = require('../../../config/index');
 
 
-const login = async (body) => {
+const login = async (body , res) => {
     
     const { email, password } = body;
 

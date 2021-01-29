@@ -5,7 +5,7 @@ const STATUS = ["blocked", "active", "pending"];
 
 const _Schema = new Schema({
     video_id : { type: Schema.Types.ObjectId, require: true },
-    status: {type: Boolean, default:true},
+    status: { type: String, enum: STATUS, default: STATUS[2] },
     receiver_by: { type: Schema.Types.ObjectId, require: true },
     created_by: { type: Schema.Types.ObjectId, require: true }
 });
@@ -14,7 +14,7 @@ const _Schema = new Schema({
 function validateCreate(data) {
     const schema = {
         video_id: Joi.string().required(),
-        status: Joi.boolean(),
+        status: Joi.string().valid(STATUS),
         receiver_by: Joi.string().required(),
         created_by: Joi.string().required(),
  
@@ -25,12 +25,36 @@ function validateCreate(data) {
 function validateEdit(data) {
     const schema = {
         video_id: Joi.string().required(),
-        status: Joi.boolean(),
+        status: Joi.string().valid(STATUS),
         receiver_by: Joi.string().required(),
         created_by: Joi.string().required()
     };
     return Joi.validate(data, schema);
 }
+
+_Schema.virtual('videoDetail', {
+    ref: 'VideoDetails',
+    localField: 'video_id',
+    foreignField: '_id',
+    justOne: true
+});
+
+_Schema.virtual('created', {
+    ref: 'User',
+    localField: 'created_by',
+    foreignField: '_id',
+    justOne: true
+});
+
+_Schema.virtual('receiver', {
+    ref: 'User',
+    localField: 'receiver_by',
+    foreignField: '_id',
+    justOne: true
+});
+
+_Schema.set('toObject', { virtuals: true });
+_Schema.set('toJSON', { virtuals: true });
 
 
 /**
