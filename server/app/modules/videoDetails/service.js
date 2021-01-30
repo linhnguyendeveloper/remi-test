@@ -1,7 +1,7 @@
 const { VideoDetails } = require('../../models/videoDetails');
 
-const getMany = () => {
-    return VideoDetails.find();
+const getMany = (query={}) => {
+    return VideoDetails.find(query);
 }
 
 const getOne = (id) => {

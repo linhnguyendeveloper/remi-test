@@ -24,6 +24,8 @@ module.exports = async (req, res, next) => {
             await User.findById(decodedToken._id).then(async doc => {
                 if(!doc || !doc.checkPassword(decodedToken.password))
                     return res.status(constants.CODE.BAD_REQUEST).json({'token ':"wrong token"});
+
+                    req.user = doc; 
                 next();
             })
         } catch (err) {

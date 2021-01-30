@@ -4,6 +4,20 @@ const getMany = () => {
     return Notifications.find();
 }
 
+const getManyByUser = (query={}) => {
+  return Notifications.find({$or:[...query]}).populate([
+    {
+      path : "videoDetail"
+    },
+    {
+      path : "created"
+    },
+    {
+      path : "receiver"
+    },
+  ]);;
+}
+
 const getJoinMany = () => {
 
 
@@ -50,5 +64,6 @@ module.exports = {
     update,
     deleteOne,
     deleteMany,
-    getJoinMany
+    getJoinMany,
+    getManyByUser
 }

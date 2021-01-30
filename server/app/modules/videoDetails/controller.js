@@ -14,6 +14,16 @@ const getMany = (req, res) => {
         })
 }
 
+const getManyByUser = (req, res) => {
+    let query = {created_by:req.user.id}
+    Serivce.getMany(query)
+        .then(data => {
+            res.status(200).json(data)
+        }).catch(err => {
+            res.status(401).json(err)
+        })
+}
+
 const getOne = (req, res) => {
     let id = req.params.id;
     Serivce.getOne(id)
@@ -117,6 +127,7 @@ module.exports = {
     create,
     update,
     deleteOne,
-    deleteMany
+    deleteMany,
+    getManyByUser
 
 }
