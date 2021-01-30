@@ -28,7 +28,8 @@ const listen = () => {
 const connect = () =>
     new Promise((resolve, reject) => {
         mongoose.set("useCreateIndex", true);
-        mongoose.connect(config.DATABASE.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.set('useFindAndModify', false);
+        mongoose.connect(config.DATABASE.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false  });
         const db = mongoose.connection;
         db.on("error", () => reject("Please install and start your mongodb"));
         db.once("open", resolve);

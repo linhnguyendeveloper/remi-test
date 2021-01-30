@@ -21,37 +21,8 @@ const login = async (body , res) => {
 
 }
 
-const updateRoles = (id, data) => {
-    return new Promise(async (rs, rj) => {
-        try {
-            console.log(id, data);
-            const updated = await Role.findOneAndUpdate(
-                { _id: id },
-                { $set: {
-                        "menu.$[element]": data
-                    }
-                },
-                { arrayFilters: [
-                        {
-                            'element.name': {
-                                $eq: data.name
-                            }
-                        }
-                    ]
-                })
-
-            rs({
-                updated
-            })
-        } catch (error) {
-            rj({ error })
-        }
-    });
-
-}
   
 
 module.exports = {
     login,
-    updateRoles
 }

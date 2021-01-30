@@ -13,11 +13,11 @@ const create = (data) => {
   }
   
   const update = (id,data) => {
-    return VideoDetails.findById(id).update(data)
+    return VideoDetails.findByIdAndUpdate(id,data)
   }
   
   const deleteOne = (id) => {
-    return VideoDetails.findByIdAndRemove(id)
+    return VideoDetails.findByIdAndDelete(id)
   }
   
   const deleteMany = (ids) => {

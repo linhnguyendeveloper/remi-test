@@ -77,7 +77,7 @@ _Schema.methods.checkPassword = function (password) {
  * Statics
  */
 
-
+mongoose.set('useFindAndModify', false);
 const User = mongoose.model("User", _Schema);
 exports.validateCreateUser = validateCreateUser;
 exports.validateEditUser = validateEditUser;
