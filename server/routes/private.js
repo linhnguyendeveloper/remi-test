@@ -2,7 +2,6 @@ const router = require('express').Router();
 const {confirmJWT} = require('../middleware')
 
 
-router.use('/auth', require('./auth'));
 router.use(confirmJWT);
 router.use('/users', require('./users'));
 router.use('/videos', require('./videoDetails'));

@@ -19,6 +19,7 @@ function validateCreateUser(data) {
         fullname: Joi.string().min(1).max(30).required(),
         password:  Joi.string().min(5).max(255).allow(''),
         email: Joi.string().min(5).max(100).required().email(),
+        status: Joi.string().valid(STATUS),
     };
     return Joi.validate(data, schema);
 }

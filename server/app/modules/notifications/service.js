@@ -4,6 +4,22 @@ const getMany = () => {
     return Notifications.find();
 }
 
+const getJoinMany = () => {
+
+
+  return Notifications.find().populate([
+    {
+      path : "videoDetail"
+    },
+    {
+      path : "created"
+    },
+    {
+      path : "receiver"
+    },
+  ]);
+}
+
 const getOne = (id) => {
   return Notifications.findById(id);
 }
@@ -33,5 +49,6 @@ module.exports = {
     create,
     update,
     deleteOne,
-    deleteMany
+    deleteMany,
+    getJoinMany
 }
