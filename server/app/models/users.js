@@ -6,9 +6,9 @@ const dataMigrate = require('../../database/seeds/users')
 const STATUS = ["blocked", "active", "pending"];
 
 const _Schema = new Schema({
-    fullname: { type: String, required: true },
+    fullname: { type: String,  required: true },
     password: { type: String, required: false },
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, index:true },
 
     status: { type: String, enum: STATUS, default: STATUS[1] },
 });
