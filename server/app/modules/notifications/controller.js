@@ -13,6 +13,19 @@ const getMany = async (req, res) => {
         })
 }
 
+const getManyByUser = async (req, res) => {
+    let query = [
+        {created_by:req.user._id},
+        {receiver_by:req.user._id},
+    ]
+    Serivce.getManyByUser(query)
+        .then(data => {
+            res.status(200).json(data)
+        }).catch(err => {
+            res.status(401).json(err)
+        })
+}
+
 const getJoinMany = async (req, res) => {
     Serivce.getJoinMany()
         .then(data => {
@@ -126,6 +139,7 @@ module.exports = {
     create,
     update,
     deleteOne,
-    deleteMany
+    deleteMany,
+    getManyByUser
 
 }
