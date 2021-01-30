@@ -33,6 +33,7 @@ const migrateDBs = (DBs) => Promise.all(DBs.map(migrateDB))
 
 const connect = () => new Promise((resolve, reject) => {
     mongoose.set('useCreateIndex', true);
+    
     mongoose.connect(config.DATABASE.DATABASE_URL, { useNewUrlParser: true });
     const db = mongoose.connection;
     db.on('error', () => reject('Please install and start your mongodb'));

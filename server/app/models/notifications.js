@@ -61,7 +61,7 @@ _Schema.set('toJSON', { virtuals: true });
  * Statics
  */
 
-
+mongoose.set('useFindAndModify', false);
 const Notifications = mongoose.model("Notifications", _Schema);
 exports.validateCreate = validateCreate;
 exports.validateEdit = validateEdit;

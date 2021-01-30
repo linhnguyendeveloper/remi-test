@@ -43,11 +43,11 @@ const create = (data) => {
   }
   
   const update = (id,data) => {
-    return Notifications.findById(id).update(data)
+    return Notifications.findByIdAndUpdate(id,data)
   }
   
   const deleteOne = (id) => {
-    return Notifications.findByIdAndRemove(id)
+    return Notifications.findByIdAndDelete(id)
   }
   
   const deleteMany = (ids) => {

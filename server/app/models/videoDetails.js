@@ -6,8 +6,8 @@ const _Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     url: { type: String, required: true },
-    like: { type: Number, default:0 },
-    disLike: { type: Number, default:0 },
+    likes: { type: Number, default:0 },
+    disLikes: { type: Number, default:0 },
     status: {type: Boolean, default:true},
     created_by: { type: Schema.Types.ObjectId, require: true },
 });
@@ -18,8 +18,8 @@ function validateCreate(data) {
         title: Joi.string().required(),
         description: Joi.string().required(),
         url: Joi.string().required(),
-        like: Joi.number(),
-        disLike: Joi.number(),
+        likes: Joi.number(),
+        disLikes: Joi.number(),
         status: Joi.boolean(),
         created_by: Joi.string().required(),
  
@@ -32,8 +32,8 @@ function validateEdit(data) {
         title: Joi.string().required(),
         description: Joi.string().required(),
         url: Joi.string().required(),
-        like: Joi.number(),
-        disLike: Joi.number(),
+        likes: Joi.number(),
+        disLikes: Joi.number(),
         status: Joi.boolean(),
         created_by: Joi.string().required(),
     };
@@ -45,7 +45,7 @@ function validateEdit(data) {
  * Statics
  */
 
-
+mongoose.set('useFindAndModify', false);
 const VideoDetails = mongoose.model("VideoDetails", _Schema);
 exports.validateCreate = validateCreate;
 exports.validateEdit = validateEdit;

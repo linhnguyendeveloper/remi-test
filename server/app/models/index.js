@@ -1,5 +1,6 @@
 module.exports = [
     "users",
     "videoDetails",
-    "notifications"
+    "notifications",
+    "likesVideos"
 ];
