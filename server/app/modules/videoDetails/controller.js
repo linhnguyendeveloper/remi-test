@@ -5,7 +5,12 @@ const SerivceLike = require('../likesVideos/service');
 const constants = require('../../utils/constants')
 const bcrypt = require('bcryptjs');
 const { validateCreate, validateEdit } = require('../../models/videoDetails')
+const getYouTubeID= require("get-youtube-id");
+const getYoutubeTitle =require("get-youtube-title") ;
+var YouTube = require('youtube-node');
 
+var youTube = new YouTube();
+youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
 const getMany = (req, res) => {
     Serivce.getMany()
         .then(data => {
@@ -69,8 +74,17 @@ const getOne = (req, res) => {
 }
 
 
-const create = (req, res) => {
+const create = async(req, res) => {
     let data = req.body
+    youTube.getById('HcwTxRuq-uk', function(error, result) {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          console.log(JSON.stringify(result, null, 2));
+        }
+      });
+      console.log(data,'/');
     const err = validateCreate(data)
     if (err && err.error) {
         let errors = err.error && err.error.details.reduce((result, item) => {

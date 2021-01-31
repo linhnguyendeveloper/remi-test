@@ -1,9 +1,9 @@
 const Service = require('./service');
-const Controller = require('./controller');
+const ControllerNotifications = require('./controller');
 
 module.exports = {
     Service,
-    Controller
+    ControllerNotifications
 }
 
 

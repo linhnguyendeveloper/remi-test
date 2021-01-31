@@ -1,5 +1,7 @@
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 
 export default {
   SIGNUP_SUCCESS,
+  SIGNIN_SUCCESS
 };

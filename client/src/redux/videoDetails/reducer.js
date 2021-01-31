@@ -1,25 +1,19 @@
 import {
-  SIGNUP_SUCCESS,
-  SIGNIN_SUCCESS
+  LIKE_VIDEO_SUCCESS
 } from './actionTypes'
 
 const initState = {
-  auth: [],
-  status:false
+  likeStatus: [],
 }
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case SIGNUP_SUCCESS:
+    case LIKE_VIDEO_SUCCESS:
       return {
         ...state,
-        auth: action.auth
+        likeStatus: action.likeStatus
       }
-      case SIGNIN_SUCCESS:
-        return {
-          ...state,
-          status: true
-        }
+     
     default:
       return {
         ...state

@@ -15,6 +15,7 @@ class App extends React.Component {
                   <Redirect to="/login" />
                 </Route>
                 <Route path="/login" component={Login} exact />
+                
               </Switch>
              
           </Layout>
