@@ -7,7 +7,9 @@ const getMany = () => {
 const getOne = (id) => {
   return User.findById(id);
 }
-
+const getByEmail = (email) => {
+  return User.find({email:email});
+}
 const create = (data) => {
     return User.create(data);
   }
@@ -33,5 +35,6 @@ module.exports = {
     create,
     update,
     deleteOne,
-    deleteMany
+    deleteMany,
+    getByEmail
 }

@@ -13,10 +13,10 @@ const _Schema = new Schema({
 
 function validateCreate(data) {
     const schema = {
-        video_id: Joi.string().required(),
+        video_id: Joi.string(),
         status: Joi.string().valid(STATUS),
-        receiver_by: Joi.string().required(),
-        created_by: Joi.string().required(),
+        receiver_by: Joi.string(),
+        created_by: Joi.string(),
  
     };
     return Joi.validate(data, schema);

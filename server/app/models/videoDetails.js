@@ -29,13 +29,13 @@ function validateCreate(data) {
 
 function validateEdit(data) {
     const schema = {
-        title: Joi.string().required(),
-        description: Joi.string().required(),
-        url: Joi.string().required(),
-        likes: Joi.number(),
-        disLikes: Joi.number(),
+        title: Joi.string(),
+        description: Joi.string(),
+        url: Joi.string(),
+        like: Joi.number(),
+        disLike: Joi.number(),
         status: Joi.boolean(),
-        created_by: Joi.string().required(),
+        created_by: Joi.string(),
     };
     return Joi.validate(data, schema);
 }

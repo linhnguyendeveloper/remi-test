@@ -1,15 +1,15 @@
 const router = require('express').Router();
-const { Controller } = require('../../app/modules/notifications');
+const { ControllerNotifications } = require('../../app/modules/notifications');
 
 
-router.get("/view", Controller.getMany)
-router.get("/viewAll", Controller.getJoinMany)
-router.get("/viewByUser", Controller.getManyByUser)
-router.get("/view/:id", Controller.getOne)
-router.post("/create", Controller.create)
-router.put("/update/:id", Controller.update)
-router.delete("/delete/:id", Controller.deleteOne)
-router.delete("/delete/", Controller.deleteMany)
+router.get("/view", ControllerNotifications.getMany)
+router.get("/viewAll", ControllerNotifications.getJoinMany)
+router.get("/viewByUser", ControllerNotifications.getManyByUser)
+router.get("/view/:id", ControllerNotifications.getOne)
+router.post("/create", ControllerNotifications.create)
+router.put("/update/:id", ControllerNotifications.update)
+router.delete("/delete/:id", ControllerNotifications.deleteOne)
+router.delete("/delete/", ControllerNotifications.deleteMany)
 
 
 module.exports = router;

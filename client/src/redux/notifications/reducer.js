@@ -1,24 +1,24 @@
 import {
-  SIGNUP_SUCCESS,
-  SIGNIN_SUCCESS
+  GET_ALL_SHARED_VIDEO,
+  SHARE_VIDEO_SUCCESS
 } from './actionTypes'
 
 const initState = {
-  auth: [],
-  status:false
+  videos: [],
+  shareStatus:false
 }
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case SIGNUP_SUCCESS:
+    case GET_ALL_SHARED_VIDEO:
       return {
         ...state,
-        auth: action.auth
+        videos: action.videos
       }
-      case SIGNIN_SUCCESS:
+      case SHARE_VIDEO_SUCCESS:
         return {
           ...state,
-          status: true
+          shareStatus: action.shareStatus
         }
     default:
       return {

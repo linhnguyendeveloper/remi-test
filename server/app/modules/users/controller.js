@@ -42,7 +42,8 @@ const create = (req, res) => {
         UserSerivce.create(data)
             .then((data) => {
                 return res.status(constants.CODE.CREATE_OK).json({
-                    message: "create successful"
+                    message: "create successful",
+                    
                 });
             })
             .catch((err) => {
