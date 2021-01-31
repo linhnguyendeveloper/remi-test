@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Serivce = require('./service');
+const SerivceLike = require('../likesVideos/service');
 const constants = require('../../utils/constants')
 const bcrypt = require('bcryptjs');
 const { validateCreate, validateEdit } = require('../../models/notifications')
@@ -15,12 +16,24 @@ const getMany = async (req, res) => {
 
 const getManyByUser = async (req, res) => {
     let query = [
-        {created_by:req.user._id},
-        {receiver_by:req.user._id},
+        { created_by: req.user._id },
+        { receiver_by: req.user._id },
     ]
-    Serivce.getManyByUser(query)
-        .then(data => {
-            res.status(200).json(data)
+
+    await Serivce.getManyByUser(query)
+        .then(async data => {
+            data = JSON.parse(JSON.stringify(data))
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                if (item.created_by === req.user._id.toString()) {
+                    item.isMeShare = true
+                }
+                if(item.videoDetail){
+                    let like = await SerivceLike.getOneWhere()
+                    item.videoDetail.liked = like?like.status:0
+                } 
+            }
+            return res.status(200).json(data)
         }).catch(err => {
             res.status(401).json(err)
         })

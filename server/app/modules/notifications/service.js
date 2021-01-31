@@ -15,7 +15,7 @@ const getManyByUser = (query={}) => {
     {
       path : "receiver"
     },
-  ]);;
+  ]).exec()
 }
 
 const getJoinMany = () => {
