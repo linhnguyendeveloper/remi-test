@@ -1,10 +1,6 @@
 import React from "react";
 import { message } from "antd";
 import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
-import getYouTubeID from "get-youtube-id";
-
-import getYoutubeTitle from "get-youtube-title";
-import axios from "axios";
 
 const ListVideos = ({
   videos,

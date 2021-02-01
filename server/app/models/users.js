@@ -6,7 +6,7 @@ const dataMigrate = require('../../database/seeds/users')
 const STATUS = ["blocked", "active", "pending"];
 
 const _Schema = new Schema({
-    fullname: { type: String,  required: true },
+    fullname: { type: String},
     password: { type: String, required: false },
     email: { type: String, unique: true, index:true },
 
@@ -16,7 +16,7 @@ const _Schema = new Schema({
 
 function validateCreateUser(data) {
     const schema = {
-        fullname: Joi.string().min(1).max(30).required(),
+        fullname: Joi.string().min(1).max(30),
         password:  Joi.string().min(5).max(255).allow(''),
         email: Joi.string().min(5).max(100).required().email(),
         status: Joi.string().valid(STATUS),
@@ -26,7 +26,7 @@ function validateCreateUser(data) {
 
 function validateEditUser(data) {
     const schema = {
-        fullname: Joi.string().min(1).max(30).required(),
+        fullname: Joi.string().min(1).max(30),
         password:  Joi.string().min(5).max(255).allow(''),
         email: Joi.string().min(5).max(100).required().email(),
         status: Joi.string().valid(STATUS),
