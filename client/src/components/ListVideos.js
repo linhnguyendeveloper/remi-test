@@ -1,7 +1,7 @@
 import React from "react";
-import { message } from "antd";
-import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
-
+import { message,Empty } from "antd";
+import { LikeFilled, DislikeFilled } from "@ant-design/icons";
+import "./ListVideos.css";
 const ListVideos = ({
   videos,
   likeVideo,
@@ -22,7 +22,7 @@ const ListVideos = ({
   };
   return (
     <div>
-      {listVideos.map((item, index) => {
+      {listVideos.length > 0 ? listVideos.map((item, index) => {
         const videoDetail = item.videoDetail;
         return (
           <div
@@ -35,8 +35,8 @@ const ListVideos = ({
           >
             <div>
               <iframe
-                width="400"
-                height="270"
+                width="500"
+                height="300"
                 src={videoDetail.url.replace("watch?v=", "embed/")}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -53,7 +53,7 @@ const ListVideos = ({
             >
               <h2>{videoDetail.title}</h2>
               <p>
-                Shared by{" "}
+                Shared by
                 {JSON.parse(localStorage.getItem("auth"))?.email ===
                 item?.created?.email
                   ? " Me"
@@ -62,39 +62,46 @@ const ListVideos = ({
               <div style={{ fontSize: 18 }}>
                 {JSON.parse(localStorage.getItem("auth"))?.token ? (
                   <>
-                    {videoDetail.likes}
-
-                    <LikeOutlined
+                    <LikeFilled
                       style={{
-                        fontSize: 20,
+                        fontSize: 22,
                         cursor: "pointer",
-                        margin: "0 10px 0 3px",
+                        margin: "0 5px 0 5px",
+                        color: videoDetail.liked == 1 ? "blue" : "inherit",
                       }}
-                        
                       onClick={() =>
                         handleLike(videoDetail.like, videoDetail._id)
                       }
                     />
-                    {videoDetail.disLikes}
-                    <DislikeOutlined
+                    <span className={videoDetail.liked == 1 ? "liked" : ""}>
+                      {videoDetail.likes}
+                    </span>
+                    <DislikeFilled
                       style={{
-                        fontSize: 20,
+                        fontSize: 22,
                         cursor: "pointer",
-                        margin: "0 10px 0 3px",
+                        margin: "0 5px 0 15px",
+                        color: videoDetail.liked == -1 ? "blue" : "inherit",
                       }}
                       onClick={() =>
                         handleDisLike(videoDetail.disLike, videoDetail._id)
                       }
                     />
+                    <span className={videoDetail.liked == -1 ? "liked" : ""}>
+                      {videoDetail.disLikes}
+                    </span>
                   </>
                 ) : null}
               </div>
-              <p style={{ marginTop: 20 }}>Description</p>
-              <p>{videoDetail.description.slice(0, 250)}</p>
+              <p style={{ marginTop: 20,fontWeight:900 }}>Description</p>
+              <p>{videoDetail.description.slice(0, 300)}</p>
             </div>
           </div>
         );
-      })}
+      })
+    : <Empty description={<span>You have not received or shared any video yet.</span>}/>
+    }
+      
     </div>
   );
 };

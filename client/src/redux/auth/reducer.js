@@ -18,7 +18,7 @@ export default function (state = initState, action) {
       case SIGNIN_SUCCESS:
         return {
           ...state,
-          status: true
+          status: action.data
         }
     default:
       return {

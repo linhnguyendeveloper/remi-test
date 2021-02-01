@@ -61,7 +61,14 @@ const likevideo = async (req, res) => {
         (await Serivce.update(video_id, { $inc: { disLikes: 1 } }));
       await SerivceLike.create({ ...queryLike, status });
     }
-    return res.status(200).json("done");
+    let returnData = await Serivce.getOne(video_id).then(data=>{
+      return {
+        likes:data.likes,
+        disLikes:data.disLikes,
+        video_id:data._id
+      }
+    })
+    return res.status(200).json(returnData);
   });
 };
 

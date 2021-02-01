@@ -29,7 +29,7 @@ const getManyByUser = async (req, res) => {
           item.isMeShare = true;
         }
         if (item.videoDetail) {
-          let like = await SerivceLike.getOneWhere();
+          let like = await SerivceLike.getOneWhere({video_id:item.video_id,created_by:req.user._id});
           item.videoDetail.liked = like ? like.status : 0;
         }
       }

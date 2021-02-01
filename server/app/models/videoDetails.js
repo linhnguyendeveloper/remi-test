@@ -4,7 +4,7 @@ const Joi = require('joi');
 
 const _Schema = new Schema({
     title: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String },
     url: { type: String, required: true },
     likes: { type: Number, default:0 },
     disLikes: { type: Number, default:0 },
@@ -16,7 +16,7 @@ const _Schema = new Schema({
 function validateCreate(data) {
     const schema = {
         title: Joi.string().required(),
-        description: Joi.string().required(),
+        description: Joi.string(),
         url: Joi.string().required(),
         likes: Joi.number(),
         disLikes: Joi.number(),

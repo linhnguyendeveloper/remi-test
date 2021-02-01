@@ -12,7 +12,7 @@ const login = async (body, res) => {
     let user = await User.findOne({ email, status: 'active' }).exec();
 
     if (!user || !user.checkPassword(password)) {
-        return res.status(constants.CODE.BAD_REQUEST).json({ 'errors ': "wrong email or password" });
+        return res.status(constants.CODE.BAD_REQUEST).send({ 'errors': "wrong email or password" });
     }
 
     return jwtToken({ _id: user._id, password });
@@ -26,7 +26,7 @@ const createAndLogin = async (req, res) => {
     let user = await User.findOne({ email, status: 'active' }).exec();
 
     if (user && !user.checkPassword(data.password)) {
-        return res.status(constants.CODE.BAD_REQUEST).json({ 'errors ': "wrong email or password" });
+        return res.send({ errors: "Wrong password" });
     }
 
     if (!user) {

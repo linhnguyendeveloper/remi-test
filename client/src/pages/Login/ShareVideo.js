@@ -10,6 +10,7 @@ import {
   Layout,
   Menu,
   Breadcrumb,
+  Typography,
 } from "antd";
 import { HomeFilled } from "@ant-design/icons";
 import ListVideos from "../../components/ListVideos";
@@ -23,6 +24,8 @@ import {
 import getYouTubeID from "get-youtube-id";
 import { likeVideo } from "../../redux/videoDetails/actions";
 import axios from "axios";
+const { Title } = Typography;
+
 const ShareVideo = ({
   signUp,
   auth,
@@ -52,15 +55,19 @@ const ShareVideo = ({
       : getAllSharedVideo();
   }, []);
   useEffect(() => {
-    if (status) {
-      message.info("Sign in success !");
-    }
     if (shareStatus) {
       message.info("Share movie success !");
       getShareVideoByUser();
     }
-  }, [status, shareStatus]);
-
+  }, [shareStatus]);
+  useEffect(() => {
+    if (status && status.token) {
+      message.info("Sign in success !");
+    }
+    if (status && status.errors) {
+      message.error(status.errors);
+    }
+  }, [status]);
   const handleSignOut = () => {
     localStorage.removeItem("auth");
     window.location.reload();
@@ -77,7 +84,7 @@ const ShareVideo = ({
         shareVideo({
           url: inputValue.url,
           receiver_by: inputValue.receiverId,
-          created_by: "601396222399b1bc44cf236a",
+          created_by: "",
           description: data.description,
           title: data.title,
         });
@@ -97,18 +104,21 @@ const ShareVideo = ({
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           paddingTop: "20px",
+          borderBottom: "1px solid black",
+          margin: "15px 10% 30px",
+          marginBottom:"30px"
         }}
       >
         <h1 style={{ fontSize: "30px" }}>
-          <HomeFilled /> FUNNY MOVIES
+          <Title> <HomeFilled />  Ant Design</Title>
         </h1>
         <div>
-          {status || JSON.parse(localStorage.getItem("auth"))?.token ? (
+          {status.token || JSON.parse(localStorage.getItem("auth"))?.token ? (
             <>
               <span style={{ margin: "0 6px" }}>
-                Welcome{" "}
+                Welcome
                 {JSON.parse(localStorage.getItem("auth"))?.email ||
                   inputValue.email}
               </span>
@@ -139,14 +149,7 @@ const ShareVideo = ({
           )}
         </div>
       </div>
-      <div
-        style={{
-          width: "55%",
-          height: "3px",
-          backgroundColor: "black",
-          margin: "0px auto 30px",
-        }}
-      ></div>
+
       <ListVideos
         videos={videos}
         likeVideo={likeVideo}

@@ -1,6 +1,6 @@
-import { SIGNUP_SUCCESS,SIGNIN_SUCCESS } from "./actionTypes";
-import { signUpApi,signInApi } from "../../services/api/auth";
-import {getShareVideoByUser} from '../../redux/notifications/actions'
+import { SIGNUP_SUCCESS, SIGNIN_SUCCESS } from "./actionTypes";
+import { signUpApi, signInApi } from "../../services/api/auth";
+import { getShareVideoByUser } from "../../redux/notifications/actions";
 function signUpSuccess(auth) {
   return {
     type: SIGNUP_SUCCESS,
@@ -26,12 +26,23 @@ function signInSuccess(data) {
 export const signIn = (data) => {
   return (dispatch) => {
     signInApi(data)
-      .then(async(res) => {
+      .then(async (res) => {
+        console.log(res);
+        if (res.data.token) {
+          dispatch(signInSuccess(res.data));
+          await localStorage.setItem(
+            "auth",
+            JSON.stringify({ token: res.data.token, email: data.email }),
+          );
+          dispatch(getShareVideoByUser(res.data.token));
+        }
+        else 
         dispatch(signInSuccess(res.data));
-        await localStorage.setItem('auth',JSON.stringify({token:res.data.token,email:data.email}))
-        dispatch(getShareVideoByUser(res.data.token))
+
       })
-      
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+
+      });
   };
 };
