@@ -10,15 +10,12 @@ class App extends React.Component {
       <div className="App">
         <Switch>
           <Layout style={{ minHeight: "100vh" }}>
-           
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/share-video" />
-                </Route>
-                <Route path="/share-video" component={ShareVideo} exact />
-                
-              </Switch>
-             
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/share-video" />
+              </Route>
+              <Route path="/share-video" component={ShareVideo} exact />
+            </Switch>
           </Layout>
         </Switch>
       </div>

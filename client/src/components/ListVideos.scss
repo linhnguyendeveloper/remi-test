@@ -1,0 +1,27 @@
+.video-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  width: 30%;
+  .like-group {
+    font-size: 18px;
+    .liked {
+      color: blue;
+    }
+    .like-icon {
+      font-size: 22px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .dislike-icon {
+      font-size: 22px;
+      cursor: pointer;
+      margin: 0 5px 0 15px;
+    }
+  }
+
+  .description {
+    margin-top: 20px;
+    font-weight: 900;
+  }
+}

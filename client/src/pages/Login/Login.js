@@ -1,11 +1,10 @@
 import '../../App.css'
 import React from 'react'
-import { Layout, Row, Col, Input, Checkbox, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import { Layout } from 'antd'
 import ShareVideo from './ShareVideo'
 
 function Login() {
-  const { Header, Footer, Content } = Layout
+  const { Content } = Layout
   return (
     <div className="Login">
       <Layout>

@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  message,
-  Modal,
-  Select,
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Layout,
-  Menu,
-  Breadcrumb,
-  Typography,
-} from "antd";
+import { message, Modal, Input, Button, Layout, Typography } from "antd";
 import { HomeFilled } from "@ant-design/icons";
 import ListVideos from "../../components/ListVideos";
 import { connect } from "react-redux";
-import { signUp, signIn } from "../../redux/auth/actions";
+import { signIn, getUsers } from "../../redux/auth/actions";
 import {
   getAllSharedVideo,
   shareVideo,
@@ -24,11 +12,10 @@ import {
 import getYouTubeID from "get-youtube-id";
 import { likeVideo } from "../../redux/videoDetails/actions";
 import axios from "axios";
+import "./ShareVideo.scss";
 const { Title } = Typography;
 
 const ShareVideo = ({
-  signUp,
-  auth,
   getAllSharedVideo,
   videos,
   signIn,
@@ -36,19 +23,15 @@ const ShareVideo = ({
   shareVideo,
   shareStatus,
   likeVideo,
-  likeStatus,
   getShareVideoByUser,
+  getUsers,
 }) => {
   const [visible, setVisible] = useState(false);
   const [visibleAuth, setVisibleAuth] = useState(false);
   const [inputValue, setInputValue] = useState({
-    receiverId: "a",
+    receiver: "a",
     url: "",
   });
-  const [form] = Form.useForm();
-  useEffect(() => {
-    form.setFieldsValue({ ...inputValue });
-  }, [form, inputValue]);
   useEffect(() => {
     JSON.parse(localStorage.getItem("auth"))?.token
       ? getShareVideoByUser()
@@ -68,6 +51,7 @@ const ShareVideo = ({
       message.error(status.errors);
     }
   }, [status]);
+
   const handleSignOut = () => {
     localStorage.removeItem("auth");
     window.location.reload();
@@ -83,7 +67,7 @@ const ShareVideo = ({
         const data = response.data?.items[0]?.snippet;
         shareVideo({
           url: inputValue.url,
-          receiver_by: inputValue.receiverId,
+          receiver_by: inputValue.receiver,
           created_by: "",
           description: data.description,
           title: data.title,
@@ -99,50 +83,34 @@ const ShareVideo = ({
       password: inputValue.password,
     });
   };
+  const handleOpenShareModal = () => {
+    setVisible(true);
+    getUsers();
+  };
   return (
     <Layout>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingTop: "20px",
-          borderBottom: "1px solid black",
-          margin: "15px 10% 30px",
-          marginBottom:"30px"
-        }}
-      >
-        <h1 style={{ fontSize: "30px" }}>
-          <Title> <HomeFilled />  Ant Design</Title>
-        </h1>
-        <div>
+      <div className="container">
+          <Title>
+            <HomeFilled /> Funny Movie
+          </Title>
+        <div className="btn-group">
           {status.token || JSON.parse(localStorage.getItem("auth"))?.token ? (
             <>
-              <span style={{ margin: "0 6px" }}>
-                Welcome
+              <span>
+                Welcome{" "}
                 {JSON.parse(localStorage.getItem("auth"))?.email ||
                   inputValue.email}
               </span>
-              <Button
-                onClick={() => setVisible(true)}
-                style={{ margin: "0 2px" }}
-              >
+              <Button onClick={() => handleOpenShareModal()}>
                 Share a movie
               </Button>
-              <Button
-                onClick={() => handleSignOut()}
-                style={{ margin: "0 2px" }}
-                type=""
-                danger
-              >
+              <Button onClick={() => handleSignOut()} type="" danger>
                 Log out
               </Button>
             </>
           ) : (
             <>
-              <Button
-                onClick={() => setVisibleAuth(true)}
-                style={{ margin: "0 2px" }}
-              >
+              <Button onClick={() => setVisibleAuth(true)}>
                 Login / Register
               </Button>
             </>
@@ -153,52 +121,31 @@ const ShareVideo = ({
       <ListVideos
         videos={videos}
         likeVideo={likeVideo}
-        getAllSharedVideo={getAllSharedVideo}
         getShareVideoByUser={getShareVideoByUser}
-        status={status}
       />
-      <hr />
       {visible && (
         <Modal
           title={"Share a movie to your friends"}
           visible={visible}
           onOk={handleOkShareMovie}
           onCancel={() => setVisible(false)}
-          className="modal-add-edit"
+          className="modal"
         >
-          <Form.Item
-            className="form-custom-input"
-            label="Receiver Name"
-            name="receiverId"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng cocnhập NSD",
-              },
-            ]}
-          >
+          <div className="input-wrapper">
+            <label>Username</label>
             <Input
-              initialvalues={inputValue.receiverId}
+              initialvalues={inputValue.receiver}
               className="input-custom"
               onChange={(e) => {
                 setInputValue({
                   ...inputValue,
-                  receiverId: e.target.value,
+                  receiver: e.target.value,
                 });
               }}
             />
-          </Form.Item>
-          <Form.Item
-            className="form-custom-input"
-            label="Video URL"
-            name="url"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập NSD",
-              },
-            ]}
-          >
+          </div>
+          <div className="input-wrapper">
+            <label>Video URL</label>
             <Input
               placeholder="Paste video URL from Youtube here"
               className="input-custom"
@@ -209,7 +156,8 @@ const ShareVideo = ({
                 });
               }}
             />
-          </Form.Item>
+          </div>
+
           <div>
             <Button
               type="danger"
@@ -229,17 +177,8 @@ const ShareVideo = ({
           onCancel={() => setVisibleAuth(false)}
           className="modal-add-edit"
         >
-          <Form.Item
-            className="form-custom-input"
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng cnhập NSD",
-              },
-            ]}
-          >
+          <div className="input-wrapper">
+            <label>Username</label>
             <Input
               initialvalues={inputValue.email}
               placeholder="email"
@@ -251,21 +190,13 @@ const ShareVideo = ({
                 });
               }}
             />
-          </Form.Item>
-          <Form.Item
-            className="form-custom-input"
-            label="Password"
-            name="url"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập NSD",
-              },
-            ]}
-          >
+          </div>{" "}
+          <div className="input-wrapper">
+            <label>Username</label>
             <Input
               initialvalues={inputValue.password}
               placeholder="password"
+              type="password"
               className="input-custom"
               onChange={(e) => {
                 setInputValue({
@@ -274,7 +205,7 @@ const ShareVideo = ({
                 });
               }}
             />
-          </Form.Item>
+          </div>
         </Modal>
       )}
     </Layout>
@@ -289,12 +220,12 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  signUp: (data) => dispatch(signUp(data)),
   getAllSharedVideo: (data) => dispatch(getAllSharedVideo(data)),
   signIn: (data) => dispatch(signIn(data)),
   shareVideo: (data) => dispatch(shareVideo(data)),
   likeVideo: (data, id) => dispatch(likeVideo(data, id)),
   getShareVideoByUser: (data) => dispatch(getShareVideoByUser(data)),
+  getUsers: () => dispatch(getUsers()),
 });
 
 export default connect(mapState, mapDispatch)(ShareVideo);

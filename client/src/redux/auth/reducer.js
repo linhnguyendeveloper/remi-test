@@ -1,5 +1,5 @@
 import {
-  SIGNUP_SUCCESS,
+  GET_USERS_SUCCESS,
   SIGNIN_SUCCESS
 } from './actionTypes'
 
@@ -10,7 +10,7 @@ const initState = {
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case SIGNUP_SUCCESS:
+    case GET_USERS_SUCCESS:
       return {
         ...state,
         auth: action.auth

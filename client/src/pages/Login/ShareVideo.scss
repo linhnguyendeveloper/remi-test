@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-bottom: 1px solid black;
+    margin: 15px 10% 30px;
+    margin-bottom:30px;
+    h1 {
+        font-size: 30px;
+    }
+    .btn-group {
+        span {
+            margin : 0 6px;
+        }
+        button {
+            margin : 0 2px!important;
+        }
+    }
+}
+.input-wrapper {
+    margin-bottom: 20px;
+    label {
+        margin-bottom: 10px;
+        display: block;
+    }
+}

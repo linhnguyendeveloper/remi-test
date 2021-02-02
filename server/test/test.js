@@ -4,38 +4,39 @@ let server = require("../server");
 let expect = chai.expect;
 let should = chai.should();
 chai.use(chaiHttp);
-//Our parent block
-describe("Pets", () => {
-  // beforeEach((done) => {
-  //     //Before each test we empty the database in your case
-  //     done();
-  // });
-  /*
-   * Test the /GET route
-   */
-  let url = "http://localhost:3001";
+describe("SHARE VIDEO APP", () => {
   let user = {
     email: "linh@gmail.com",
     password: "123456",
   };
-  let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDE1ODY3OGQ3ZmE3NmEyMTU2ZDUzYWUiLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTYxMjE2MjI2NSwiZXhwIjoxNjEyMjQ4NjY1fQ.CKRMoQLoGEminhgnupgsUIateWCQr8BSax_6RhQGJ_0";
-  describe("Get all video", () => {
-    it("Can get all video", (done) => {
+  let falseUser = {
+    email: "linh@gmail.com",
+    password: "1234563543",
+  };
+  let token;
+  beforeEach(() => {
+    chai
+      .request(server)
+      .post("/api/pl/auth/createAndLogin")
+      .send(user)
+      .end((err, res) => {
+        token = res.body.token;
+      });
+  });
+  describe("Interact with video : User ", () => {
+    it("can get all video", (done) => {
       chai
-        .request(url)
+        .request(server)
         .get("/api/pl/notifications/viewAll")
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an("array");
-          console.log(res.body.length);
-
           done();
         });
     });
-    it("Can get all video by a user with token", (done) => {
+    it("can get all video by a user with token", (done) => {
       chai
-        .request(url)
+        .request(server)
         .get("/api/pv/notifications/viewByUser")
         .set("Authorization", token)
         .end((err, res) => {
@@ -44,9 +45,9 @@ describe("Pets", () => {
           done();
         });
     });
-    it("Can share a video ", (done) => {
+    it("can share a video ", (done) => {
       chai
-        .request(url)
+        .request(server)
         .post("/api/pv/notifications/create")
         .set("Authorization", token)
         .send({
@@ -58,8 +59,60 @@ describe("Pets", () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.data).to.be.an('object');
-          expect(res.body.message).to.equal('create successful');
+          expect(res.body.data).to.be.an("object");
+          expect(res.body.message).to.equal("create successful");
+          done();
+        });
+    });
+
+    it("can like or dislike a video", (done) => {
+      chai
+        .request(server)
+        .post("/api/pv/notifications/create")
+        .set("Authorization", token)
+        .send({
+          url: "https://www.youtube.com/watch?v=Zuigoj-fy2o",
+          receiver_by: "linh2@gmail.com",
+          created_by: "",
+          description: "A description",
+          title: "A title",
+        })
+        .end((err, res) => {
+          chai
+            .request(server)
+            .post("/api/pv/videos/like/" + res.body.data.video_id)
+            .set("Authorization", token)
+            .send({
+              status: -1,
+            })
+            .end((err2, res2) => {
+              expect(res2.status).to.equal(200);
+              expect(res2.body.likes).to.not.equal(undefined);
+              expect(res2.body.video_id).to.equal(res.body.data.video_id);
+              done();
+            });
+        });
+    });
+  });
+  describe("Authentication : User ", () => {
+    it("can login or register using email and password ", (done) => {
+      chai
+        .request(server)
+        .post("/api/pl/auth/createAndLogin")
+        .send(user)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.token).to.not.equal(undefined);
+          done();
+        });
+    });
+    it("can not login or register using right email but wrong password ", (done) => {
+      chai
+        .request(server)
+        .post("/api/pl/auth/createAndLogin")
+        .send(falseUser)
+        .end((err, res) => {
+          expect(res.body.errors).to.equal("Wrong password");
           done();
         });
     });
