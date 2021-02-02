@@ -12,7 +12,6 @@ const initState = {
 export default function (state = initState, action) {
   switch (action.type) {
     case GET_USERS_SUCCESS:
-      console.log(action);
       return {
         ...state,
         users: action.data
