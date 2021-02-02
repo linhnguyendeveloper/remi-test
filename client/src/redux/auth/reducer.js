@@ -5,15 +5,17 @@ import {
 
 const initState = {
   auth: [],
-  status:false
+  status:false,
+  users:[]
 }
 
 export default function (state = initState, action) {
   switch (action.type) {
     case GET_USERS_SUCCESS:
+      console.log(action);
       return {
         ...state,
-        auth: action.auth
+        users: action.data
       }
       case SIGNIN_SUCCESS:
         return {

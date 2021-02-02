@@ -1,5 +1,4 @@
 import React from "react";
-import Login from "./pages/Login/Login";
 import "antd/dist/antd.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";

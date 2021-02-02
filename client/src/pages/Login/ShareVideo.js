@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { message, Modal, Input, Button, Layout, Typography } from "antd";
+import { message, Modal, Input, Button, Layout, Typography,Select } from "antd";
 import { HomeFilled } from "@ant-design/icons";
 import ListVideos from "../../components/ListVideos";
 import { connect } from "react-redux";
@@ -14,6 +14,7 @@ import { likeVideo } from "../../redux/videoDetails/actions";
 import axios from "axios";
 import "./ShareVideo.scss";
 const { Title } = Typography;
+const { Option } = Select;
 
 const ShareVideo = ({
   getAllSharedVideo,
@@ -25,6 +26,7 @@ const ShareVideo = ({
   likeVideo,
   getShareVideoByUser,
   getUsers,
+  users,
 }) => {
   const [visible, setVisible] = useState(false);
   const [visibleAuth, setVisibleAuth] = useState(false);
@@ -33,9 +35,10 @@ const ShareVideo = ({
     url: "",
   });
   useEffect(() => {
-    JSON.parse(localStorage.getItem("auth"))?.token
-      ? getShareVideoByUser()
-      : getAllSharedVideo();
+    if (JSON.parse(localStorage.getItem("auth"))?.token) {
+      getShareVideoByUser();
+      getUsers();
+    } else getAllSharedVideo();
   }, []);
   useEffect(() => {
     if (shareStatus) {
@@ -85,14 +88,22 @@ const ShareVideo = ({
   };
   const handleOpenShareModal = () => {
     setVisible(true);
-    getUsers();
   };
+  const usersSelect =
+    users.length > 0
+      ? users.map((item) => {
+          return {
+            dataIndex: item._id,
+            title: item.email,
+          };
+        })
+      : [];
   return (
     <Layout>
       <div className="container">
-          <Title>
-            <HomeFilled /> Funny Movie
-          </Title>
+        <Title>
+          <HomeFilled /> Funny Movie
+        </Title>
         <div className="btn-group">
           {status.token || JSON.parse(localStorage.getItem("auth"))?.token ? (
             <>
@@ -133,16 +144,22 @@ const ShareVideo = ({
         >
           <div className="input-wrapper">
             <label>Username</label>
-            <Input
-              initialvalues={inputValue.receiver}
-              className="input-custom"
-              onChange={(e) => {
-                setInputValue({
-                  ...inputValue,
-                  receiver: e.target.value,
-                });
-              }}
-            />
+            <Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="Select a person"
+              optionFilterProp="children"
+              onChange={(value)=>setInputValue({...inputValue,receiver:value})}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {
+                usersSelect.length>0 && usersSelect.map(item=> (
+                  <Option value={item.title}>{item.title}</Option>
+                ))
+              }
+            </Select>
           </div>
           <div className="input-wrapper">
             <label>Video URL</label>
@@ -214,6 +231,7 @@ const ShareVideo = ({
 
 const mapState = (state) => ({
   auth: state.auth.auth,
+  users: state.auth.users,
   videos: state.notifications.videos,
   status: state.auth.status,
   shareStatus: state.notifications.shareStatus,

@@ -37,7 +37,6 @@ export const getUsers = (data) => {
   return (dispatch) => {
     getUsersApi(data)
       .then(async (res) => {
-        console.log(res.data,'>>');
         dispatch(getUsersSuccess(res.data));
       })
       .catch((err) => {

@@ -41,6 +41,7 @@ const ListVideos = ({
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  title={videoDetail.url}
                 ></iframe>
               </div>
               <div className="video-container">
@@ -58,25 +59,25 @@ const ListVideos = ({
                       <LikeFilled
                         className="like-icon"
                         style={{
-                          color: videoDetail.liked == 1 ? "blue" : "inherit",
+                          color: videoDetail.liked===1 ? "blue" : "inherit",
                         }}
                         onClick={() =>
                           handleLike(videoDetail.like, videoDetail._id)
                         }
                       />
-                      <span className={videoDetail.liked == 1 ? "liked" : ""}>
+                      <span className={videoDetail.liked===1 ? "liked" : ""}>
                         {videoDetail.likes}
                       </span>
                       <DislikeFilled
                         className="dislike-icon"
                         style={{
-                          color: videoDetail.liked == -1 ? "blue" : "inherit",
+                          color: videoDetail.liked===-1 ? "blue" : "inherit",
                         }}
                         onClick={() =>
                           handleDisLike(videoDetail.disLike, videoDetail._id)
                         }
                       />
-                      <span className={videoDetail.liked == -1 ? "liked" : ""}>
+                      <span className={videoDetail.liked===-1 ? "liked" : ""}>
                         {videoDetail.disLikes}
                       </span>
                     </>
