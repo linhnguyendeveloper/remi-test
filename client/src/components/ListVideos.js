@@ -34,19 +34,19 @@ const ListVideos = ({
               key={index}
             >
               <div>
-                {/* <iframe
+                <iframe
                   width="500"
                   height="300"
                   src={videoDetail.url.replace("watch?v=", "embed/")}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                ></iframe> */}
+                ></iframe>
               </div>
               <div className="video-container">
                 <h2>{videoDetail.title}</h2>
                 <p>
-                  Shared by
+                  Shared by {" "}
                   {JSON.parse(localStorage.getItem("auth"))?.email ===
                   item?.created?.email
                     ? " Me"
