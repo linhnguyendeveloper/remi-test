@@ -1,5 +1,6 @@
 import { LIKE_VIDEO_SUCCESS } from "./actionTypes";
 import {likeVideoApi} from "../../services/api/videoDetail";
+import {getShareVideoByUser} from "../../redux/notifications/actions";
 
 function likeVideoSuccess(likeStatus) {
   return {
@@ -12,6 +13,7 @@ export const likeVideo = (data,id) => {
     likeVideoApi(data,id)
       .then((res) => {
         dispatch(likeVideoSuccess(res.data));
+        dispatch(getShareVideoByUser())
       })
       .catch((err) => {});
   };

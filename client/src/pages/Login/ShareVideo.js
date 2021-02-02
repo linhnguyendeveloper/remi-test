@@ -37,7 +37,6 @@ const ShareVideo = ({
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("auth"))?.token) {
       getShareVideoByUser();
-      getUsers();
     } else getAllSharedVideo();
   }, []);
   useEffect(() => {
@@ -87,6 +86,7 @@ const ShareVideo = ({
     });
   };
   const handleOpenShareModal = () => {
+    getUsers();
     setVisible(true);
   };
   const usersSelect =

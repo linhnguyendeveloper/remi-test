@@ -5,12 +5,12 @@ let expect = chai.expect;
 let should = chai.should();
 chai.use(chaiHttp);
 describe("SHARE VIDEO APP", () => {
-  let user = {
-    email: "linh@gmail.com",
+  let user = { 
+    email: "testlinh@gmail.com",
     password: "123456",
   };
   let falseUser = {
-    email: "linh@gmail.com",
+    email: "testlinh@gmail.com",
     password: "1234563543",
   };
   let token;

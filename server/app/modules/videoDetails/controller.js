@@ -36,36 +36,36 @@ const likevideo = async (req, res) => {
     created_by: req.user.id,
   };
 
-  await SerivceLike.getOneWhere(queryLike).then(async (data) => {
+  SerivceLike.getOneWhere(queryLike).then(async (data) => {
     if (data) {
       if (status === data.status) {
-        status === 1 &&
+        if(status === 1) 
           (await Serivce.update(video_id, { $inc: { likes: -1 } }));
-        status === -1 &&
+        if(status === -1)
           (await Serivce.update(video_id, { $inc: { disLikes: -1 } }));
         await SerivceLike.deleteOne(data._id);
       } else {
-        status === 1 &&
+        if(status === 1 )
           (await Serivce.update(video_id, {
             $inc: { likes: 1, disLikes: -1 },
           }));
-        status === -1 &&
+        if(status === -1 )
           (await Serivce.update(video_id, {
             $inc: { likes: -1, disLikes: 1 },
           }));
         await SerivceLike.update(data._id, { status });
       }
     } else {
-      status === 1 && (await Serivce.update(video_id, { $inc: { likes: 1 } }));
-      status === -1 &&
+      if(status === 1 ) (await Serivce.update(video_id, { $inc: { likes: 1 } }));
+      if(status === -1 )
         (await Serivce.update(video_id, { $inc: { disLikes: 1 } }));
       await SerivceLike.create({ ...queryLike, status });
     }
-    let returnData = await Serivce.getOne(video_id).then(data=>{
+    let returnData = await Serivce.getOne(video_id).then(data => {
       return {
-        likes:data.likes,
-        disLikes:data.disLikes,
-        video_id:data._id
+        likes: data.likes,
+        disLikes: data.disLikes,
+        video_id: data._id
       }
     })
     return res.status(200).json(returnData);

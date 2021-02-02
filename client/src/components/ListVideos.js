@@ -1,5 +1,5 @@
 import React from "react";
-import {  Empty } from "antd";
+import { Empty } from "antd";
 import { LikeFilled, DislikeFilled } from "@ant-design/icons";
 import "./ListVideos.scss";
 const ListVideos = ({
@@ -12,12 +12,12 @@ const ListVideos = ({
       ? videos.filter((item) => item.videoDetail)
       : [];
   const handleLike = async (data, id) => {
-    likeVideo({ status: 1 }, id);
-    await getShareVideoByUser();
+    await likeVideo({ status: 1 }, id);
+    // await getShareVideoByUser();
   };
   const handleDisLike = async (data, id) => {
-    likeVideo({ status: -1 }, id);
-    await getShareVideoByUser();
+    await likeVideo({ status: -1 }, id);
+    // await getShareVideoByUser();
   };
   return (
     <div>
@@ -49,7 +49,7 @@ const ListVideos = ({
                 <p>
                   Shared by {" "}
                   {JSON.parse(localStorage.getItem("auth"))?.email ===
-                  item?.created?.email
+                    item?.created?.email
                     ? " Me"
                     : item?.created?.email}
                 </p>
@@ -59,25 +59,25 @@ const ListVideos = ({
                       <LikeFilled
                         className="like-icon"
                         style={{
-                          color: videoDetail.liked===1 ? "blue" : "inherit",
+                          color: videoDetail.liked === 1 ? "blue" : "inherit",
                         }}
                         onClick={() =>
                           handleLike(videoDetail.like, videoDetail._id)
                         }
                       />
-                      <span className={videoDetail.liked===1 ? "liked" : ""}>
+                      <span className={videoDetail.liked === 1 ? "liked" : ""}>
                         {videoDetail.likes}
                       </span>
                       <DislikeFilled
                         className="dislike-icon"
                         style={{
-                          color: videoDetail.liked===-1 ? "blue" : "inherit",
+                          color: videoDetail.liked === -1 ? "blue" : "inherit",
                         }}
                         onClick={() =>
                           handleDisLike(videoDetail.disLike, videoDetail._id)
                         }
                       />
-                      <span className={videoDetail.liked===-1 ? "liked" : ""}>
+                      <span className={videoDetail.liked === -1 ? "liked" : ""}>
                         {videoDetail.disLikes}
                       </span>
                     </>
